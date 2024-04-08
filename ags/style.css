@@ -1,0 +1,15 @@
+* {
+    all: unset; }
+
+.test {
+    padding: 10px;
+    border-radius: 10px;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.6);
+}
+.test-bar {
+    padding: 10px;
+    border-radius: 10px;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.6);
+}

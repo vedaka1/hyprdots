@@ -1,0 +1,13 @@
+[Default Applications]
+text/plain=kitty.desktop
+text/html=google-chrome.desktop
+x-scheme-handler/http=google-chrome.desktop
+x-scheme-handler/https=google-chrome.desktop
+x-scheme-handler/about=google-chrome.desktop
+x-scheme-handler/unknown=google-chrome.desktop
+application/x-zerosize=vim.desktop
+
+[Added Associations]
+text/plain=code.desktop;kitty.desktop;
+inode/directory=code.desktop;kitty-open.desktop;
+application/x-zerosize=vim.desktop;

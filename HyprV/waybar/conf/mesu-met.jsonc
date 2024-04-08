@@ -1,0 +1,39 @@
+{
+    "clock": {
+        "format": "{:%H:%M}",
+        "tooltip-format": "{: %A, %e %B %Y}"
+    },
+
+    "custom/clock": {
+        "exec": "date +'%a %e %b %H:%M'",
+        "interval": 1,
+        "min-length": 10,
+        "tooltip-format": "{ date + '%A, %e %B %Y'}%"
+    },
+
+    "custom/weather": {
+        //shows the current weather and forecast
+        "tooltip" : true,
+        "format" : "{}",
+        "interval" : 60,
+        "exec" : "~/.config/HyprV/waybar/scripts/waybar-wttr-c.py",
+        "return-type" : "json"
+    },
+    "custom/notifications": {
+        //shows notifications
+        "interval": 30,
+        "tooltip" : false,
+        "format" : " {}",
+        "on-click" : "ags -t notifications"
+    },
+
+    "temperature": {
+        "thermal-zone": 1,
+        "format": " {}",
+        "format-alt-click": "click-right",
+        "format-alt": " {temperatureC}°C",
+        "critical-threshold": 70,
+        "format-critical": " {temperatureC}°C",
+        "on-click": "kitty --start-as=fullscreen --title btop sh -c 'btop'"
+    }
+}

@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+# Создание словаря
+count=$(dunstctl count history)
+notifications=$(dunstctl history | jq '.data[0][0]["body"]')
+# notifications="test"
+data=$(jq -n \
+    --arg key1 "text" --arg value1 $count \
+    --arg key2 "tooltip" --arg value2 $notifications \
+    '{$key1: $value1, $key2: $value2}')
+
+get_data() {
+    # echo $notifications
+	echo $data
+}
+
+# Вывод словаря
+if [[ "$1" == "--get" ]]; then
+    get_data
+fi
