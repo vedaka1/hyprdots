@@ -1,1 +1,73 @@
-/home/vedaka1/.config/HyprV/wofi/style/v4-style-dark.css
+window {
+    margin: 0px;
+    /* background-color: #323d4b; */
+    background-color: rgba(74, 74, 74, 0);
+    border-radius: 15px;
+    font-size: 18px;
+    /* color: #212121; */
+}
+
+#input {
+    padding: 4px;
+    margin: 4px;
+    background: white;
+    box-shadow: inset 0 0 5px rgba(0,0,0,0.3);
+    padding-left: 20px;
+    border: none;
+    color: #000;
+   	outline: none;
+    border-radius: 15px;
+    margin: 10px;
+    margin-bottom: 6px;
+}
+/* #input:focus {
+    box-shadow: inset 0 0 2px black;
+} */
+#inner-box {
+    margin: 10px;
+    color: #ffffff;
+    /* background-color: rgb(74, 74, 74); */
+    border-radius: 15px;
+}
+
+#outer-box {
+    margin: 0px;
+    border: none;
+    border-radius: 10px;
+}
+
+#scroll {
+    margin-top: 5px;
+    border: none;
+    border-radius: 15px;
+    margin-bottom: 5px;
+}
+
+#img {
+    padding-right: 7px;
+}
+
+#img:selected {
+    border-radius: 15px;
+}
+
+#text:selected {
+    color: #cdd6f4;
+    margin: 0px 0px;
+    border: none;
+    border-radius: 15px;
+}
+
+#entry {
+    /* border: 0.1px solid white; */
+    padding: 7px;
+    border-radius: 15px;
+    background-color: rgb(29, 29, 29);
+    color: white;
+    margin-bottom: 7px;
+}
+
+#entry:selected {
+    box-shadow: inset 0 0 5px rgba(255, 255, 255, 0.2);
+    outline: none;
+}

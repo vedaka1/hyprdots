@@ -1,0 +1,80 @@
+$app_title_color: #ffffff;
+// $theme_selected_bg_color: #6e63ad;
+
+
+window.bar {
+    background-color: $theme_bg_color;
+    color: $theme_fg_color;
+}
+image {
+    padding: 0;
+    margin: 0;
+}
+button {
+    min-width: 25px;
+    padding-top: 0;
+    padding-bottom: 0;
+    border-radius: 100%;
+    margin: 0 5px 0 5px;
+}
+label {
+    min-height: 25px;
+    font-weight: bold;
+    margin: 0 5px 0 5px;
+}
+.workspaces {
+    padding-left: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+.workspaces button:hover {
+    background: mix($theme_selected_bg_color, $app_title_color, 80%);
+}
+.workspaces button.focused {
+    background-color: $theme_selected_bg_color;
+}
+.client-title {
+    color: $app_title_color;
+}
+
+.notification {
+    color: #ffffff;
+}
+.battery {
+    padding: 0;
+    margin: 0 0 0 10px;
+    color: $main_text_color;
+}
+.battery-percentage {
+    min-width: 40px;
+}
+.volume trough {
+    margin-left: 5px;
+    min-height: 5px;
+    border-radius: 5px;
+    background: white;
+    // border: 2px solid red;
+
+}
+.volume highlight {
+    min-height: 5px;
+    border-radius: 5px;
+    background: $theme_selected_bg_color;
+    // border: 2px solid red;
+
+}
+.systray {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.systray image {
+    font-size: 15px;
+}
+.systray button:hover {
+    background: none;
+    border: none;
+}
+.network_button {
+    margin: 0;
+}

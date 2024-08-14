@@ -73,4 +73,3 @@ disabled = false
 time_format = "%R" # Hour:Minute Format
 style = "bg:#757575"
 format = '[[  $time ](fg:#ffffff bg:#757575)]($style)'
-
