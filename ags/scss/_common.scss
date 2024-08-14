@@ -1,6 +1,8 @@
+$popups_bg_color: rgb(19, 19, 19);
+
 * {
     selection {
-        background-color: $theme_bg_color;
+        background-color: $main_background;
         color: $main_text_color;
     }
 
@@ -15,7 +17,6 @@
         opacity: 1;
     }
 }
-$popups_bg_color: rgb(19, 19, 19);
 // $popups_bg_color_active:rgba(0,0,0,0.7);
 menu {
     border-radius: 15px;
@@ -47,11 +48,11 @@ menu>menuitem {
 
 menu>menuitem:hover,
 menu>menuitem:focus {
-    background-color: $theme_selected_bg_color;
+    background-color: $main_selected;
 }
 
 menu>menuitem:active {
-    background-color: $theme_selected_bg_color;
+    background-color: $main_selected;
 }
 
 radio {

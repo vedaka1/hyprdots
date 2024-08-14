@@ -1,10 +1,6 @@
 *:not(popover) { all: unset; }
 
-$theme_bg_color: rgba(15, 15, 15, 0);
-$theme_selected_bg_color: rgb(123, 141, 255);
-$theme_fg_color: #ffffff;
-$main_text_color: #ffffff;
-
+@import './colors';
 @import './bar';
 @import './notif';
 @import './applauncher';

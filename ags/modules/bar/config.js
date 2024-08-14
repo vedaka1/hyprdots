@@ -1,4 +1,5 @@
 import { NetworkIndicator } from './network.js'
+import {Volume} from './volume.js'
 const hyprland = await Service.import("hyprland")
 const notifications = await Service.import("notifications")
 const mpris = await Service.import("mpris")
@@ -8,10 +9,6 @@ const systemtray = await Service.import("systemtray")
 const date = Variable("", {
     poll: [1000, 'date "+%a %d %b %H:%M"'],
 })
-
-// widgets can be only assigned as a child in one container
-// so to make a reuseable widget, make it a function
-// then you can simply instantiate one by calling it
 
 function Workspaces() {
     const activeId = hyprland.active.workspace.bind("id")
@@ -83,44 +80,6 @@ function Media() {
     })
 }
 
-
-function Volume() {
-    const icons = {
-        101: "overamplified",
-        67: "high",
-        34: "medium",
-        1: "low",
-        0: "muted",
-    }
-
-    function getIcon() {
-        const icon = audio.speaker.is_muted ? 0 : [101, 67, 34, 1, 0].find(
-            threshold => threshold <= audio.speaker.volume * 100)
-
-        return `audio-volume-${icons[icon]}-symbolic`
-    }
-
-    const icon = Widget.Icon({
-        icon: Utils.watch(getIcon(), audio.speaker, getIcon),
-    })
-
-    const slider = Widget.Slider({
-        hexpand: true,
-        draw_value: false,
-        on_change: ({ value }) => audio.speaker.volume = value,
-        setup: self => self.hook(audio.speaker, () => {
-            self.value = audio.speaker.volume || 0
-        }),
-    })
-
-    return Widget.Box({
-        class_name: "volume",
-        css: "min-width: 180px",
-        children: [icon, slider],
-    })
-}
-
-
 function BatteryLabel() {
     const batIcon = Utils.merge([
         battery.bind("percent"),
@@ -148,18 +107,33 @@ function BatteryLabel() {
         ],
     })
 }
-const weather = Variable("No weather :(",{
+// const weather = Variable("No weather",{
+//     poll: [
+//         300000,
+//         ['bash', '-c', '~/.config/python-scripts/weather.py']
+//     ]
+// })
+function getWeather() {
+    return Utils.fetch("https://wttr.in/Архангельск?format=1")
+        .then((res) => {
+            return res.text()
+        })
+        .then((data) => {
+            return data
+        })
+        .catch(console.error)
+}
+const weather = Variable("No weather",{
     poll: [
-        10000,
-        ['bash', '-c', '~/.config/python-scripts/weather.py']
+        30000,
+        () => {return getWeather()}
     ]
 })
 function Weather() {
     console.log(weather.value);
     return Widget.Label({
         class_name: "weather",
-        label: weather.bind()
-        .as(weather => weather.replaceAll('"', '')+ "°")
+        label: weather.bind().as(value => value.replace(/\n/g, ''))
     })
 }
 
@@ -181,8 +155,18 @@ function SysTray() {
         children: items,
     })
 }
+const keyboard_layout = Variable("none");
+hyprland.connect("keyboard-layout", (hyprland, keyboardname, layoutname) => {
+    keyboard_layout.setValue(layoutname.trim().toLowerCase().substr(0, 2));
+});
 
-
+function KeyboardLayout() {
+    const widget = Widget.Label({
+        class_name: "keyboard",
+        label: keyboard_layout.bind().as((c) => c == "none" ? "us" : c)
+    });
+    return widget;
+}
 // layout of the bar
 function Left() {
     return Widget.Box({
@@ -200,7 +184,6 @@ function Center() {
         children: [
             Media(),
             Notification(),
-            Weather(),
         ],
     })
 }
@@ -210,11 +193,13 @@ function Right() {
         hpack: "end",
         spacing: 8,
         children: [
+            // NetworkIndicator(),
+            KeyboardLayout(),
+            SysTray(),
+            Weather(),
             Volume(),
             BatteryLabel(),
-            // NetworkIndicator(),
             Clock(),
-            SysTray(),
         ],
     })
 }

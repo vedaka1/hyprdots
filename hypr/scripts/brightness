@@ -10,7 +10,7 @@ get_backlight() {
 
 # Notify
 notify_user() {
-	notify-send -h string:x-canonical-private-synchronous:sys-notify -u low "Brightness : $(brightnessctl g)"
+	notify-send -h string:x-canonical-private-synchronous:sys-notify -t 700 -u low "Brightness : $(brightnessctl g)"
 }
 
 # Increase brightness

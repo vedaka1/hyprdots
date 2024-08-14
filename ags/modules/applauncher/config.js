@@ -1,104 +1,133 @@
-const { query } = await Service.import("applications")
+const { Gdk } = imports.gi;
+import App from 'resource:///com/github/Aylur/ags/app.js';
+import Widget from 'resource:///com/github/Aylur/ags/widget.js';
+import * as Utils from 'resource:///com/github/Aylur/ags/utils.js';
+
+const applications = await Service.import('applications')
+import { DesktopEntryButton } from './searchbuttons.js';
 const WINDOW_NAME = "applauncher"
+const MAX_RESULTS = 5
+// /** @param {import('resource:///com/github/Aylur/ags/service/applications.js').Application} app */
 
-/** @param {import('resource:///com/github/Aylur/ags/service/applications.js').Application} app */
-const AppItem = app => Widget.Button({
-    class_name: "applauncher-item",
-    on_clicked: () => {
-        App.closeWindow(WINDOW_NAME)
-        app.launch()
-    },
-    attribute: { app },
-    child: Widget.Box({
-        children: [
-            Widget.Icon({
-                icon: app.icon_name || "",
-                size: 42,
-            }),
-            Widget.Label({
-                class_name: "applauncher-item-title",
-                label: app.name,
-                xalign: 0,
-                vpack: "center",
-                truncate: "end",
-            }),
-        ],
-    }),
-})
+export const SearchAndWindows = () => {
+    var _appSearchResults = [];
 
-const Applauncher = ({ width = 500, height = 500, spacing = 12 }) => {
-    // list of application buttons
-    let applications = query("").map(AppItem)
-
-    // container holding the buttons
-    const list = Widget.Box({
+    const resultsBox = Widget.Box({
+        hpack: 'start',
+        className: 'overview-search-results',
         vertical: true,
-        children: applications,
-        spacing,
-    })
-
-    // repopulate the box, so the most frequent apps are on top of the list
-    function repopulate() {
-        applications = query("").map(AppItem)
-        list.children = applications
-    }
-
-    // const entryPromptRevealer = Widget.Revealer({
-    //     revealChild: true,
-    //     child: Widget.Label({
-    //         className: 'applauncher-search-label',
-    //         label: 'Type to search'
-    //     }),
-    // });
-
-    // search entry
-    const entry = Widget.Entry({
-        hexpand: true,
-        class_name: "applauncher-search-prompt",
-        css: `margin-bottom: ${spacing}px;`,
-        text: "Search",
-        // to launch the first item on Enter
-        on_accept: () => {
-            // make sure we only consider visible (searched for) applications
-            const results = applications.filter((item) => item.visible);
-                if (results[0]) {
-                    App.toggleWindow(WINDOW_NAME)
-                    results[0].attribute.app.launch()
-                }
-        },
-        // filter out the list
-        on_change: ({ text }) => applications.forEach(item => {
-            item.visible = item.attribute.app.match(text ?? "")
+    });
+    const resultsRevealer = Widget.Revealer({
+        transitionDuration: 0.1,
+        revealChild: false,
+        transition: 'slide_down',
+        // duration: 200,
+        hpack: 'start',
+        child: resultsBox,
+    });
+    const entryPromptRevealer = Widget.Revealer({
+        transition: 'crossfade',
+        transitionDuration: 0.5,
+        revealChild: true,
+        hpack: 'end',
+        child: Widget.Label({
+            className: 'overview-search-prompt txt-large txt',
+            label: 'Type to search'
         }),
-    })
+    });
+    const entryIconRevealer = Widget.Revealer({
+        transition: 'crossfade',
+        transitionDuration: 0.5,
+        revealChild: false,
+        hpack: 'end',
+        child: Widget.Label({
+            className: 'txt txt-large icon-material overview-search-icon',
+            label: 'Search',
+        }),
+    });
 
+    const entryIcon = Widget.Box({
+        className: 'overview-search-prompt-box',
+        setup: box => box.pack_start(entryIconRevealer, true, true, 0),
+    });
+    const entry = Widget.Entry({
+        className: 'overview-search-box txt-small txt',
+        hpack: 'center',
+        onAccept: (self) => { // This is when you hit Enter
+            resultsBox.children[0].onClicked();
+        },
+        onChange: (entry) => { // this is when you type
+            const isAction = entry.text[0] == '>';
+            const isDir = (['/', '~'].includes(entry.text[0]));
+            resultsBox.get_children().forEach(ch => ch.destroy());
+
+            // check empty if so then dont do stuff
+            if (entry.text == '') {
+                resultsRevealer.revealChild = false;
+                entryPromptRevealer.revealChild = true;
+                entryIconRevealer.revealChild = false;
+                entry.toggleClassName('overview-search-box-extended', false);
+                return;
+            }
+            const text = entry.text;
+            resultsRevealer.revealChild = true;
+            entryPromptRevealer.revealChild = false;
+            entryIconRevealer.revealChild = true;
+            entry.toggleClassName('overview-search-box-extended', true);
+            _appSearchResults = applications.query(text);
+
+            // Add application entries
+            let appsToAdd = MAX_RESULTS;
+            _appSearchResults.forEach(app => {
+                if (appsToAdd == 0) return;
+                resultsBox.add(DesktopEntryButton(app));
+                appsToAdd--;
+            });
+
+            // Fallbacks
+            // if the first word is an actual command
+            resultsBox.show_all();
+        },
+    });
     return Widget.Box({
         vertical: true,
-        css: `margin: ${spacing}px;`,
         children: [
-            entry,
-
-            // wrap the list in a scrollable
-            Widget.Scrollable({
-                hscroll: "never",
-                css: `min-width: ${width}px;`
-                    + `min-height: ${height}px;`,
-                child: list,
+            Widget.Box({
+                hpack: 'center',
+                children: [
+                    entry,
+                    Widget.Box({
+                        className: 'overview-search-icon-box',
+                        setup: (box) => {
+                            box.pack_start(entryPromptRevealer, true, true, 0)
+                        },
+                    }),
+                    entryIcon,
+                ]
             }),
+            resultsRevealer,
         ],
-        setup: self => self.hook(App, (_, windowName, visible) => {
-            if (windowName !== WINDOW_NAME)
-                return
-
-            // when the applauncher shows up
-            if (visible) {
-                repopulate()
-                entry.text = ""
-                entry.grab_focus()
-            }
-        }),
-    })
-}
+        setup: (self) => self
+            .hook(App, (_b, name, visible) => {
+                if (name == 'overview' && !visible) {
+                    resultsBox.children = [];
+                    entry.set_text('');
+                }
+            })
+            .on('key-press-event', (widget, event) => { // Typing
+                const keyval = event.get_keyval()[1];
+                const modstate = event.get_state()[1];
+                if (!(modstate & Gdk.ModifierType.CONTROL_MASK)) { // Ctrl not held
+                    if (keyval >= 32 && keyval <= 126 && widget != entry) {
+                        Utils.timeout(1, () => entry.grab_focus());
+                        entry.set_text(entry.text + String.fromCharCode(keyval));
+                        entry.set_position(-1);
+                    }
+                }
+            })
+        ,
+    });
+};
 
 // there needs to be only one instance
 export const applauncher = Widget.Window({
@@ -109,9 +138,5 @@ export const applauncher = Widget.Window({
     }),
     visible: false,
     keymode: "exclusive",
-    child: Applauncher({
-        width: 500,
-        height: 500,
-        spacing: 12,
-    }),
+    child: SearchAndWindows(),
 })
