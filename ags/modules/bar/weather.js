@@ -17,7 +17,7 @@ const weather = Variable("No weather",{
         () => {return getWeather()}
     ]
 })
-const Weather = () => {
+export const Weather = () => {
     return Widget.Label({
         class_name: "weather",
         label: weather.bind().as(value => value.replace(/\n/g, ''))
