@@ -18,6 +18,10 @@ cliphist
 kitty 
 wl-clipboard 
 python-requests
+python-pytesseract
+python-pillow
+python-numpy
+python-pyperclip
 swww
 wlogout
 wofi
