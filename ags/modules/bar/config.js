@@ -1,11 +1,12 @@
 import { NetworkIndicator } from './network.js'
-import {Volume} from './volume.js'
+import { Volume } from './volume.js'
+import { Weather } from './weather.js'
 const hyprland = await Service.import("hyprland")
 const notifications = await Service.import("notifications")
 const mpris = await Service.import("mpris")
-const audio = await Service.import("audio")
 const battery = await Service.import("battery")
 const systemtray = await Service.import("systemtray")
+
 const date = Variable("", {
     poll: [1000, 'date "+%a %d %b %H:%M"'],
 })
@@ -107,36 +108,6 @@ function BatteryLabel() {
         ],
     })
 }
-// const weather = Variable("No weather",{
-//     poll: [
-//         300000,
-//         ['bash', '-c', '~/.config/python-scripts/weather.py']
-//     ]
-// })
-function getWeather() {
-    return Utils.fetch("https://wttr.in/Архангельск?format=1")
-        .then((res) => {
-            return res.text()
-        })
-        .then((data) => {
-            return data
-        })
-        .catch(console.error)
-}
-const weather = Variable("No weather",{
-    poll: [
-        30000,
-        () => {return getWeather()}
-    ]
-})
-function Weather() {
-    console.log(weather.value);
-    return Widget.Label({
-        class_name: "weather",
-        label: weather.bind().as(value => value.replace(/\n/g, ''))
-    })
-}
-
 
 function SysTray() {
     const items = systemtray.bind("items")
