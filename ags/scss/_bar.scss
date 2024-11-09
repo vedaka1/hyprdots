@@ -22,9 +22,7 @@ label {
     font-weight: bold;
     margin: 0 5px 0 5px;
 }
-.clock {
-    min-width: 120px;
-}
+
 .workspaces {
     padding-left: 5px;
     padding-top: 5px;
@@ -39,7 +37,16 @@ label {
 .client-title {
     color: $app_title_color;
 }
-
+.clock {
+    margin: 0 10px 0 0;
+}
+.clock-date {
+    margin: 0;
+    min-width: 75px;
+}
+.clock-time {
+    margin: 0 0 0 10px;
+}
 .notification {
     color: #ffffff;
 }
@@ -52,9 +59,17 @@ label {
     min-width: 40px;
 }
 .keyboard {
+    padding: 5px 0 5px 0;
+}
+.keyboard-label {
     min-width: 20px;
-    padding-bottom: 3px;
     font-size: 16px;
+    border-radius: 10px;
+    // background: $theme_fg_color;
+    // color: #212121;
+    padding: 0 5px 3px 5px;
+    margin: 0;
+    min-height: 0;    
 }
 // .volume trough {
 //     margin-left: 5px;

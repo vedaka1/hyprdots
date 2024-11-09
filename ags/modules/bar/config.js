@@ -1,15 +1,14 @@
 import { NetworkIndicator } from './network.js'
 import { Volume } from './volume.js'
 import { Weather } from './weather.js'
+import { Bluetooth } from './bluetooth.js'
+import { PowerButton } from './power_profile.js'
+
 const hyprland = await Service.import("hyprland")
 const notifications = await Service.import("notifications")
 const mpris = await Service.import("mpris")
 const battery = await Service.import("battery")
 const systemtray = await Service.import("systemtray")
-
-const date = Variable("", {
-    poll: [1000, 'date "+%a %d %b %H:%M"'],
-})
 
 function Workspaces() {
     const activeId = hyprland.active.workspace.bind("id")
@@ -34,11 +33,26 @@ function ClientTitle() {
     })
 }
 
+const time = Variable("", {
+    poll: [1000, 'date "+%H:%M"'],
+})
+const date = Variable("", {
+    poll: [1000, 'date "+%a %d %b"'],
+})
 
 function Clock() {
-    return Widget.Label({
+    return Widget.Box({
         class_name: "clock",
-        label: date.bind(),
+        children: [
+            Widget.Label({
+                class_name: "clock-date",
+                label: date.bind(),
+            }),
+            Widget.Label({
+                class_name: "clock-time",
+                label: time.bind(),
+            })
+        ]
     })
 }
 
@@ -109,34 +123,50 @@ function BatteryLabel() {
     })
 }
 
-function SysTray() {
-    const items = systemtray.bind("items")
-    .as(items => items.map(item => Widget.Button({
-        child: Widget.Icon(
-            {
-                icon: item.bind("icon")
-            }),
-            on_primary_click: (_, event) => item.activate(event),
-            on_secondary_click: (_, event) => item.openMenu(event),
-            tooltip_markup: item.bind("tooltip_markup"),
-        })))
+/** @param {import('types/service/systemtray').TrayItem} item */
+const SysTrayItem = item => Widget.Button({
+    child: Widget.Icon().bind('icon', item, 'icon'),
+    tooltipMarkup: item.bind('tooltip_markup'),
+    onPrimaryClick: (_, event) => item.activate(event),
+    onSecondaryClick: (_, event) => item.openMenu(event),
+});
 
+const SysTray = () => {
     return Widget.Box({
-        class_name: "systray",
-        children: items,
+        children: systemtray.bind('items').as(i => i.map(SysTrayItem))
     })
 }
+
+// function SysTray() {
+//     const items = systemtray.bind("items")
+//     .as(items => items.map(item => Widget.Button({
+//         child: Widget.Icon(
+//             {
+//                 icon: item.bind("icon")
+//             }),
+//             on_primary_click: (_, event) => item.activate(event),
+//             on_secondary_click: (_, event) => item.openMenu(event),
+//             tooltip_markup: item.bind("tooltip_markup"),
+//         })))
+
+//     return Widget.Box({
+//         class_name: "systray",
+//         children: items,
+//     })
+// }
 const keyboard_layout = Variable("none");
 hyprland.connect("keyboard-layout", (hyprland, keyboardname, layoutname) => {
     keyboard_layout.setValue(layoutname.trim().toLowerCase().substr(0, 2));
 });
 
-function KeyboardLayout() {
-    const widget = Widget.Label({
+const KeyboardLayout = () => {
+    return Widget.Box({
         class_name: "keyboard",
-        label: keyboard_layout.bind().as((c) => c == "none" ? "us" : c)
+        child: Widget.Label({
+            class_name: "keyboard-label",
+            label: keyboard_layout.bind().as((c) => c == "none" ? "us" : c)
+        })
     });
-    return widget;
 }
 // layout of the bar
 function Left() {
@@ -165,6 +195,8 @@ function Right() {
         spacing: 8,
         children: [
             // NetworkIndicator(),
+            // Bluetooth()
+            // PowerButton(),
             KeyboardLayout(),
             SysTray(),
             Weather(),

@@ -13,7 +13,7 @@ function getWeather() {
 }
 const weather = Variable("No weather",{
     poll: [
-        30000,
+        100000,
         () => {return getWeather()}
     ]
 })
