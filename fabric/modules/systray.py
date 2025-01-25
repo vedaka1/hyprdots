@@ -20,7 +20,6 @@ class SystemTray(Gtk.Box):
 
     def do_bake_item_button(self, item: Gray.Item) -> Gtk.Button:
         button = Gtk.Button()
-
         button.connect(
             'button-press-event',
             lambda button, event: self.on_button_click(button, item, event),

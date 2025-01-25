@@ -1,5 +1,3 @@
-from gi.repository import Gdk, GLib
-
 from fabric.hyprland.widgets import WorkspaceButton, Workspaces
 from fabric.widgets.box import Box
 from fabric.widgets.button import Button
@@ -7,6 +5,11 @@ from fabric.widgets.centerbox import CenterBox
 from fabric.widgets.datetime import DateTime
 from fabric.widgets.label import Label
 from fabric.widgets.wayland import WaylandWindow as Window
+from gi.repository import Gdk
+
+from modules import icons
+from modules.systray import SystemTray
+from utils.common import execute, send_signal
 
 
 class Bar(Window):
@@ -19,6 +22,7 @@ class Bar(Window):
             exclusivity='auto',
             visible=True,
             all_visible=True,
+            **kwargs,
         )
 
         self.workspaces = Workspaces(
@@ -31,15 +35,13 @@ class Bar(Window):
             buttons=[WorkspaceButton(id=i, label='') for i in range(1, 11)],
         )
 
-        # self.systray = SystemTray()
-        # self.systray = SystemTray(name="systray", spacing=8, icon_size=20)
-
+        self.systray = SystemTray()
         self.date_time = DateTime(name='date-time', formatters=['%H:%M'], h_align='center', v_align='center')
 
         self.button_apps = Button(
             name='button-bar',
             on_clicked=lambda *_: self.search_apps(),
-            child=Label(name='button-bar-label'),
+            child=Label(name='button-bar-label', markup=icons.apps),
         )
         self.button_apps.connect('enter_notify_event', self.on_button_enter)
         self.button_apps.connect('leave_notify_event', self.on_button_leave)
@@ -47,7 +49,7 @@ class Bar(Window):
         self.button_power = Button(
             name='button-bar',
             on_clicked=lambda *_: self.power_menu(),
-            child=Label(name='button-bar-label'),
+            child=Label(name='button-bar-label', markup=icons.shutdown),
         )
         self.button_power.connect('enter_notify_event', self.on_button_enter)
         self.button_power.connect('leave_notify_event', self.on_button_leave)
@@ -71,7 +73,7 @@ class Bar(Window):
                 spacing=4,
                 orientation='h',
                 children=[
-                    # self.systray,
+                    self.systray,
                     self.date_time,
                     self.button_power,
                 ],
@@ -96,13 +98,13 @@ class Bar(Window):
 
     def on_button_clicked(self, *args):
         # Ejecuta notify-send cuando se hace clic en el botón
-        GLib.spawn_command_line_async("notify-send 'Botón presionado' '¡Funciona!'")
+        execute("notify-send 'Botón presionado' '¡Funciona!'")
 
     def search_apps(self):
-        GLib.spawn_command_line_async('fabric-cli exec ax-shell \'notch.open_notch("launcher")\'')
+        send_signal(f'notch_{self.monitor}.open_notch("launcher")')
 
     def power_menu(self):
-        GLib.spawn_command_line_async('fabric-cli exec ax-shell \'notch.open_notch("power")\'')
+        send_signal(f'notch_{self.monitor}.open_notch("power")')
 
     def toggle_hidden(self):
         self.hidden = not self.hidden

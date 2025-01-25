@@ -50,13 +50,14 @@ sudo pacman -S qt5-wayland qt5ct qt6-wayland qt6ct hypridle ttf-nerd-fonts-symbo
 ```
 ### Arch (AUR)
 ```bash
-ttf-weather-icons
-aylurs-gtk-shell
 wlogout
+matugen-bin
+fabric-git
+ttf-tabler-icons
 ```
 #### Install
 ```bash
-yay -S ttf-weather-icons aylurs-gtk-shell wlogout
+yay -S wlogout
 ```
 
     
