@@ -1,75 +1,57 @@
-format = """
-[](fg:#ffffff)\
-$username\
-[  ](bg:#ffffff fg:#000000)\
-[](bg:#769ff0 fg:#ffffff)\
-$directory\
-[](fg:#769ff0 bg:#394260)\
-$git_branch\
-$git_status\
-[](fg:#394260 bg:#212736)\
-$nodejs\
-$rust\
-$golang\
-$php\
-[](fg:#212736)\
+add_newline = false
+command_timeout = 1000
 
-$python\
-\n$character"""
+[character]
+error_symbol = "[  ✗](bold red)"
+success_symbol = "[  λ](bold red)"
 
-[username]
-show_always = true
-style_user = "bg:#ffffff fg:#000000"
-style_root = "bg:#ffffff fg:#c929ff"
-format = "[$user]($style)"
+[package]
 disabled = false
+
+[cmd_duration]
+min_time = 5000
+show_milliseconds = false
+disabled = false
+format="[$duration]($style)"
+style="italic blue"
 
 [directory]
-style = "fg:#e3e5e5 bg:#769ff0"
-format = "[ $path ]($style)"
-truncation_length = 3
-truncation_symbol = "…/"
+truncation_length = 5
+format = "[$path]($style)[$lock_symbol]($lock_style) "
+style = "bold yellow"
+read_only = "🔒"
+read_only_style= "bold white"
 
-[directory.substitutions]
-"Documents" = " "
-"Downloads" = " "
-"Music" = " "
-"Pictures" = " "
+[hostname]
+ssh_only = false
+trim_at = ".companyname.com"
+disabled = false
+style = "bold italic green"
 
-[git_branch]
-symbol = ""
-style = "bg:#394260"
-format = '[[ $symbol $branch ](fg:#769ff0 bg:#394260)]($style)'
+[git_commit]
+commit_hash_length = 8
+style = "bold white"
 
-[git_status]
-style = "bg:#394260"
-format = '[[($all_status$ahead_behind )](fg:#769ff0 bg:#394260)]($style)'
+[memory_usage]
+format = "[${ram}( | ${swap})]($style) "
+threshold = 50
+style = "bold dimmed white"
+disabled = true
 
-[python]
-python_binary = ["./venv/bin/python", "python3", "python"]
-
-[nodejs]
-symbol = ""
-style = "bg:#212736"
-format = '[[ $symbol ($version) ](fg:#769ff0 bg:#212736)]($style)'
-
-[rust]
-symbol = ""
-style = "bg:#212736"
-format = '[[ $symbol ($version) ](fg:#769ff0 bg:#212736)]($style)'
-
-[golang]
-symbol = "ﳑ"
-style = "bg:#212736"
-format = '[[ $symbol ($version) ](fg:#769ff0 bg:#212736)]($style)'
+[status]
+style = "bg:transparent"
+symbol = "💥 "
+# format = '[\[$symbol$status\]]($style) '
+format = '($style)'
+disabled = false
 
 [php]
-symbol = ""
-style = "bg:#212736"
-format = '[[ $symbol ($version) ](fg:#769ff0 bg:#212736)]($style)'
+format = "via [🐘 $version](147 bold) "
 
-[time]
-disabled = false
-time_format = "%R" # Hour:Minute Format
-style = "bg:#757575"
-format = '[[  $time ](fg:#ffffff bg:#757575)]($style)'
+[docker_context]
+format = "via [🐋 $context](blue bold)"
+
+[dotnet]
+symbol = "🥅 "
+style = "green"
+heuristic = false

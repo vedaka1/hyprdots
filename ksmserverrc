@@ -1,0 +1,16 @@
+[LegacySession: saved at previous logout]
+count=0
+
+[Session: saved at previous logout]
+clientId1=101bc197105102000173644944700000011650008
+clientId2=101bc197105102000173774538200000011790004
+count=2
+discardCommand1[$e]=rm,-f,$HOME/.cache/sessions/Thunar-101bc197105102000173644944700000011650008
+program1=Thunar
+program2=/usr/lib/DiscoverNotifier
+restartCommand1=Thunar,--sm-client-id,101bc197105102000173644944700000011650008,--daemon
+restartCommand2=/usr/lib/DiscoverNotifier,-session,101bc197105102000173774538200000011790004_1737746140_451526
+restartStyleHint1=0
+restartStyleHint2=0
+userId1=vedaka
+userId2=vedaka

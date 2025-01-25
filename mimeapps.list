@@ -5,7 +5,10 @@ x-scheme-handler/https=google-chrome.desktop
 x-scheme-handler/about=google-chrome.desktop
 x-scheme-handler/unknown=google-chrome.desktop
 x-scheme-handler/tonsite=org.telegram.desktop.desktop
+application/toml=code.desktop
 
 [Added Associations]
 x-scheme-handler/tonsite=org.telegram.desktop.desktop;
 image/png=mupdf.desktop;swappy.desktop;
+application/yaml=code.desktop;
+application/toml=code.desktop;

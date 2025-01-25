@@ -2,8 +2,8 @@
 . ~/.config/hyprv.conf
 
 init_ags() {
-    ags -q
-    ags &
+    ags quit
+    ags run &
 }
 
 set_wallpaper() {
@@ -11,4 +11,4 @@ set_wallpaper() {
 }
 
 set_wallpaper
-init_ags
+# init_ags

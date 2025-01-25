@@ -1,0 +1,13 @@
+*:not(popover) { all: unset; }
+
+@import './colors';
+@import './bar';
+@import './notif';
+@import './applauncher';
+@import './common';
+@import './music';
+
+.slide_left {
+    transition: 50ms cubic-bezier(0.2, 0.0, 0, 1.0);
+}
+

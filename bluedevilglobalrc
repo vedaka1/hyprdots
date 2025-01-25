@@ -1,0 +1,8 @@
+[Adapters]
+18:47:3D:C3:A3:16_powered=true
+
+[Devices]
+connectedDevices=
+
+[Global]
+bluetoothBlocked=true

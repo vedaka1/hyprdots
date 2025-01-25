@@ -1,0 +1,99 @@
+$app_title_color: #ffffff;
+// $theme_selected_bg_color: #6e63ad;
+
+
+window.bar {
+    background-color: $main_background;
+    color: $theme_fg_color;
+}
+image {
+    padding: 0;
+    margin: 0;
+}
+button {
+    min-width: 25px;
+    padding-top: 0;
+    padding-bottom: 0;
+    border-radius: 100%;
+    margin: 0 5px 0 5px;
+}
+label {
+    min-height: 25px;
+    font-weight: bold;
+    margin: 0 5px 0 5px;
+}
+
+.workspaces {
+    padding-left: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+.workspaces button:hover {
+    background: mix($main_selected, $app_title_color, 80%);
+}
+.workspaces button.focused {
+    background-color: $second_background;
+}
+.client-title {
+    color: $app_title_color;
+}
+.clock {
+    margin: 0 10px 0 0;
+}
+.clock-date {
+    margin: 0;
+    min-width: 75px;
+}
+.clock-time {
+    margin: 0 0 0 10px;
+}
+.notification {
+    color: #ffffff;
+}
+.battery {
+    padding: 0;
+    margin: 0;
+    color: $main_text_color;
+}
+.battery-percentage {
+    min-width: 40px;
+}
+.keyboard {
+    padding: 5px 0 5px 0;
+}
+.keyboard-label {
+    min-width: 20px;
+    font-size: 16px;
+    border-radius: 10px;
+    // background: $theme_fg_color;
+    // color: #212121;
+    padding: 0 5px 3px 5px;
+    margin: 0;
+    min-height: 0;    
+}
+// .volume trough {
+//     margin-left: 5px;
+//     min-height: 5px;
+//     border-radius: 5px;
+//     background: white;
+//     // border: 2px solid red;
+
+// }
+// .volume highlight {
+//     min-height: 5px;
+//     border-radius: 5px;
+//     background: $theme_selected_bg_color;
+//     // border: 2px solid red;
+
+// }
+.systray {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+.bar-systray-item {
+    font-size: 19px;
+}
+
+.network_button {
+    margin: 0;
+}

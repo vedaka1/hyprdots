@@ -1,0 +1,72 @@
+.bar-music-playstate-playing {
+    // text-indent: -9999px;
+    // min-width: 20px;
+    // min-height: 20px;
+    border-radius: 50%;
+    margin: 0;
+    padding: 0;
+    color: rgba($color: #000000, $alpha: 1);
+} 
+
+.track-label {
+    background-color: $second_background;
+    border-radius: 15px;
+    padding-right: 10px;
+    padding-left: 10px;
+    margin-top: 5px;
+}
+.osd-window {
+    color:  white;
+    background-color: $second_background;
+    border-radius: 15px;
+    min-width: 380px;
+    margin-top: 10px;
+}
+.osd-music {
+    padding: 10px;
+}
+.osd-music-controlbtns-box{
+    margin-top: 22px;
+}
+.osd-music-cover-art {
+    background: mix($main_selected, $app_title_color, 80%);
+    background-position: 50% 50%;
+    background-size: contain;
+    border-radius: 10px;
+    min-width: 100px;
+    min-height: 100px;
+    margin-right: 5px;
+}
+.osd-music-cover {
+    border-radius: 10px;
+    min-width: 100px;
+    min-height: 100px;
+}
+.bar-music-playstate-txt {
+    font-size: 16px;
+}
+.osd-music-controlbtn {
+    // color: rgba($color: #000000, $alpha: 0);
+    font-size: 1.6rem;
+    padding: 0;
+    margin: 0;
+}
+.osd-music-pill{
+    margin: 0;
+    padding: 0;
+}
+.osd-music-controlbtn-txt {
+    transition: 100ms cubic-bezier(0.05, 0.7, 0.1, 1);
+}
+.osd-music-info {
+    padding: 0;
+}
+.osd-music-cover-fallback {
+    background: mix($main_selected, $app_title_color, 80%);
+    border-radius: 10px;
+    background-position:50% 50%;
+    background-size: contain;
+    min-width: 100px;
+    min-height: 100px;
+    margin-right: 5px;
+}

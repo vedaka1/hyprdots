@@ -1,0 +1,11 @@
+[Favorites-org.kde.plasma.kickoff.favorites.instance-27-0f08b719-b5e2-4181-8285-b7e2eac89769]
+ordering=applications:org.kde.discover.desktop,applications:systemsettings.desktop,preferred://browser,applications:thunar.desktop,applications:code.desktop
+
+[Favorites-org.kde.plasma.kickoff.favorites.instance-27-global]
+ordering=applications:org.kde.discover.desktop,applications:systemsettings.desktop,preferred://browser,applications:thunar.desktop,applications:code.desktop
+
+[Favorites-org.kde.plasma.kickoff.favorites.instance-4-0f08b719-b5e2-4181-8285-b7e2eac89769]
+ordering=applications:org.kde.discover.desktop,applications:systemsettings.desktop,preferred://browser,applications:thunar.desktop,applications:code.desktop
+
+[Favorites-org.kde.plasma.kickoff.favorites.instance-4-global]
+ordering=applications:org.kde.discover.desktop,applications:systemsettings.desktop,preferred://browser,applications:thunar.desktop,applications:code.desktop

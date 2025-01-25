@@ -1,0 +1,16 @@
+[Desktops]
+Id_1=1abe0ca9-39dc-4553-8097-47a47d55933d
+Number=1
+Rows=1
+
+[Effect-blur]
+NoiseStrength=1
+
+[Tiling]
+padding=4
+
+[Tiling][0627c100-86cd-5cac-86ac-c4835a37423e]
+tiles={"layoutDirection":"horizontal","tiles":[{"width":0.25},{"width":0.5},{"width":0.25}]}
+
+[Tiling][40497a99-5ee3-5d66-81a8-10d5727290c6]
+tiles={"layoutDirection":"horizontal","tiles":[{"width":0.25},{"width":0.5},{"width":0.25}]}
