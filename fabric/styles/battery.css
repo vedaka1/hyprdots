@@ -1,0 +1,17 @@
+#battery {
+    border-radius: 16px;
+    background-color: var(--shadow);
+    transition: all 0.1s ease;
+    margin-top: 4px;
+    padding: 8px;
+}
+#battery * {
+    /* padding-bottom: 8px; */
+    border-radius: 12px;
+    transition: all 0.1s ease;
+    font-weight: bold;
+}
+#battery-icon {
+    font-size: 16px;
+    color: var(--primary);
+}

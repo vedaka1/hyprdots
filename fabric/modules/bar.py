@@ -8,7 +8,8 @@ from fabric.widgets.wayland import WaylandWindow as Window
 from gi.repository import Gdk
 
 from modules import icons
-from modules.systray import SystemTray
+from modules.battery import Battery
+from modules.systray import Tray
 from utils.common import execute, send_signal
 
 
@@ -35,7 +36,9 @@ class Bar(Window):
             buttons=[WorkspaceButton(id=i, label='') for i in range(1, 11)],
         )
 
-        self.systray = SystemTray()
+        self.systray = Tray(icon_size=20, name='systray')
+        self.systray.add_style_class('hidden')
+        self.battery = Battery(name='battery', h_align='center', v_align='center')
         self.date_time = DateTime(name='date-time', formatters=['%H:%M'], h_align='center', v_align='center')
 
         self.button_apps = Button(
@@ -74,6 +77,7 @@ class Bar(Window):
                 orientation='h',
                 children=[
                     self.systray,
+                    self.battery,
                     self.date_time,
                     self.button_power,
                 ],

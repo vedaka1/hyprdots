@@ -7,18 +7,41 @@ qt5-wayland
 qt5ct
 qt6-wayland 
 qt6ct
-hypridle
-ttf-nerd-fonts-symbols
-hyprlock
-noto-fonts-emoji
 qt5-svg
 qt5-quickcontrols2
 qt5-graphicaleffects
-gtk3 
+ttf-nerd-fonts-symbols
+hypridle
+hyprland
+hyprlock
+thunar
+gtk3
+cairo
+gtk-layer-shell
+libgirepository
+gobject-introspection
+gobject-introspection-runtime
+python
+python-pip
+python-gobject
+python-cairo
+python-loguru
+pkgconf
+pipewire
+pavucontrol
+pipewire-pulse
+pipewire-audio
+pipewire-jack
+bluez 
+bluez-utils 
 polkit-gnome 
-pipewire 
+gnome-bluetooth-3.0 
+gnome-calculator
+gnome-control-center
+nwg-look
+blueberry
 wireplumber
-cliphist 
+cliphist
 kitty 
 wl-clipboard 
 python-requests
@@ -26,39 +49,30 @@ python-pytesseract
 python-pillow
 python-numpy
 python-pyperclip
+python-setproctitle
 swww
 wofi
 swappy
 grim
 slurp
-pamixer
 brightnessctl 
-bluez 
-bluez-utils 
-blueman 
-network-manager-applet 
+network-manager-applet
 starship 
-papirus-icon-theme 
+papirus-icon-theme
 ttf-jetbrains-mono-nerd 
-noto-fonts-emoji 
 xfce4-settings
 sddm
 ```
-#### Install
-```bash
-sudo pacman -S qt5-wayland qt5ct qt6-wayland qt6ct hypridle ttf-nerd-fonts-symbols hyprlock noto-fonts-emoji qt5-svg qt5-quickcontrols2 qt5-graphicaleffects gtk3 polkit-gnome pipewire wireplumber cliphist kitty wl-clipboard python-requests python-pytesseract python-pillow python-numpy python-pyperclip swww wofi swappy grim slurp pamixer brightnessctl bluez bluez-utils blueman network-manager-applet starship papirus-icon-theme ttf-jetbrains-mono-nerd noto-fonts-emoji xfce4-settings sddm
-```
+
 ### Arch (AUR)
 ```bash
 wlogout
 matugen-bin
-fabric-git
+python-fabric-git
+python-pygobject-stubs
 ttf-tabler-icons
 ```
-#### Install
-```bash
-yay -S wlogout
-```
+
 
     
 

@@ -8,6 +8,7 @@
 @import url("./styles/notifications.css");
 @import url("./styles/wallpapers.css");
 @import url("./styles/power.css");
+@import url("./styles/battery.css");
 
 * {
   all: unset;
@@ -18,7 +19,7 @@
 }
 
 #bar-inner {
-  margin: 8px;
+  margin: 7px;
   opacity: 1;
   transition: all 0.5s cubic-bezier(0.5, 0.25, 0, 1);
 }
@@ -86,6 +87,12 @@ menu > menuitem > label,
   border-radius: 16px;
   margin-top: 4px;
 }
+#systray.hidden {
+  opacity: 0;
+}
+/* #systray > button {
+  margin: 0px;
+} */
 
 menu {
   border: solid 1px;

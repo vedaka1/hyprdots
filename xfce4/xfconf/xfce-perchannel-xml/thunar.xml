@@ -13,4 +13,5 @@
   <property name="last-window-height" type="int" value="788"/>
   <property name="misc-single-click" type="bool" value="false"/>
   <property name="last-show-hidden" type="bool" value="true"/>
+  <property name="misc-use-csd" type="bool" value="false"/>
 </channel>

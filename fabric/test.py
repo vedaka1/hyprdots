@@ -1,9 +1,10 @@
-import re
-import subprocess
+def test(nums: list[int]):
+    if len(nums) == 1:
+        return True
+    for i in range(1, len(nums)):
+        if nums[i] % 2 != 0 and nums[i - 1] % 2 != 0:
+            return False
+    return True
 
-result = subprocess.run(['hyprctl', 'monitors'], capture_output=True).stdout.decode()
-test = r'href="(https://twitsave.com/download[^"]+)"'
-pattern = r'ID ([0-9])'
-match_text = re.findall(pattern, result)
-if match_text:
-    print(match_text)
+
+print(test([2, 10]))

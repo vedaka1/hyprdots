@@ -1,0 +1,19 @@
+[project]
+name = "fabric-app"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "Your Name",email = "you@example.com"}
+]
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "fabric (>=3.2.2,<4.0.0)",
+    "setproctitle (>=1.3.4,<2.0.0)",
+    "pygobject-stubs (>=2.12.0,<3.0.0)"
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
