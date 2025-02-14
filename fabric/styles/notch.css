@@ -31,8 +31,8 @@
   
   #notch-content.dashboard {
     padding: 16px;
-    min-height: 375px;
-    min-width: 820px;
+    min-height: 0px;
+    min-width: 0px;
     border-radius: 0 0 36px 36px;
   }
   

@@ -1,27 +1,27 @@
 import gi
 
-gi.require_version("Gray", "0.1")
+gi.require_version('Gray', '0.1')
+from fabric.system_tray import SystemTrayItem
 from gi.repository import Gdk, GdkPixbuf, GLib, Gray, Gtk
-from fabric.system_tray import SystemTrayItem, SystemTray
+
 
 class SystemTray(Gtk.Box):
     def __init__(self, pixel_size: int = 20, **kwargs) -> None:
-        super().__init__(name="systray", orientation=Gtk.Orientation.HORIZONTAL, spacing=8, **kwargs)
+        super().__init__(name='systray', orientation=Gtk.Orientation.HORIZONTAL, spacing=8, **kwargs)
         self.pixel_size = pixel_size
-        self.connect("item-added", self.on_item_added)
+        self.connect('item-added', self.on_item_added)
 
     def on_item_added(self, _, identifier: str):
-        item = self.
         item = self.watcher.get_item_for_identifier(identifier)
         item_button = self.do_bake_item_button(item)
-        item.connect("removed", lambda *args: item_button.destroy())
+        item.connect('removed', lambda *args: item_button.destroy())
         item_button.show_all()
         self.add(item_button)
 
     def do_bake_item_button(self, item: Gray.Item) -> Gtk.Button:
         button = Gtk.Button()
         button.connect(
-            "button-press-event",
+            'button-press-event',
             lambda button, event: self.on_button_click(button, item, event),
         )
 
@@ -44,7 +44,7 @@ class SystemTray(Gtk.Box):
                 Gtk.IconTheme()
                 .get_default()
                 .load_icon(
-                    "image-missing",
+                    'image-missing',
                     self.pixel_size,
                     Gtk.IconLookupFlags.FORCE_SIZE,
                 )
@@ -59,11 +59,11 @@ class SystemTray(Gtk.Box):
             try:
                 item.activate(event.x, event.y)
             except Exception as e:
-                print(f"Error al activar el item: {e}")
+                print(f'Error al activar el item: {e}')
         elif event.button == Gdk.BUTTON_SECONDARY:  # Click derecho
             menu = item.get_menu()
             if menu:
-                menu.set_name("system-tray-menu")
+                menu.set_name('system-tray-menu')
                 menu.popup_at_widget(
                     button,
                     Gdk.Gravity.SOUTH,

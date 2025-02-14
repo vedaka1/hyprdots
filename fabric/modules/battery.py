@@ -6,12 +6,14 @@ from fabric.widgets.label import Label
 from psutil import sensors_battery
 
 import modules.icons as icons
+from modules.kb_layout import KeyboardLayoutWidget
 
 
 class Battery(Box):
     def __init__(self, **kwargs) -> None:
         super().__init__(spacing=4, **kwargs)
-        self.children = [Label(name='battery-icon', label=''), Label(name='battery-text', label='0')]
+        self.kb = KeyboardLayoutWidget()
+        self.children = (self.kb, Label(name='battery-icon', label=''), Label(name='battery-text', label='0'))
         self.battery_level_fabricator = Fabricator(
             interval=1000,
             poll_from=lambda f: sensors_battery(),
@@ -19,8 +21,8 @@ class Battery(Box):
         )
 
     def update_label(self, battery: Any) -> None:
-        l_icon: Label = self.children[0]
-        l_text: Label = self.children[1]
+        l_icon: Label = self.children[1]
+        l_text: Label = self.children[2]
 
         l_text.set_label(f'{int(battery.percent)}%')
         if battery.power_plugged:

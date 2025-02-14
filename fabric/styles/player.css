@@ -1,0 +1,20 @@
+#player-icon {
+    color: var(--primary);
+    font-size: 20px;
+}
+#player-label {
+    color: var(--primary);
+    font-size: 14px;
+    font-weight: bold;
+}
+#player-button:hover label {
+    color: var(--secondary);
+}
+#cover {
+    min-width: 50px;
+    min-height: 50px;
+    border-radius: 10px;
+    background-position: center;
+    background-size: contain;
+    margin: 3px 10px 3px 0px;
+}

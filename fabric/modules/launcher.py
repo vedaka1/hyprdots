@@ -10,6 +10,7 @@ from fabric.widgets.scrolledwindow import ScrolledWindow
 
 import modules.icons as icons
 from utils.common import send_signal
+from utils.monitors import get_hyprland_monitors
 
 
 class AppLauncher(Box):
@@ -69,7 +70,6 @@ class AppLauncher(Box):
         )
 
         self.resize_viewport()
-
         self.add(self.launcher_box)
         self.show_all()
 
@@ -82,6 +82,7 @@ class AppLauncher(Box):
         # Vuelve a cargar la lista de aplicaciones
         self._all_apps = get_desktop_applications()
         self.arrange_viewport()
+        self.search_entry.on_clicked = lambda *_: (self._all_apps[0].launch(), self.close_launcher())
 
     def arrange_viewport(self, query: str = ''):
         remove_handler(self._arranger_handler) if self._arranger_handler else None
@@ -89,12 +90,12 @@ class AppLauncher(Box):
 
         filtered_apps_iter = iter(
             sorted(
-                [
+                (
                     app
                     for app in self._all_apps
                     if query.casefold()
                     in ((app.display_name or '') + (' ' + app.name + ' ') + (app.generic_name or '')).casefold()
-                ],
+                ),
                 key=lambda app: (app.display_name or '').casefold(),
             )
         )
@@ -145,4 +146,5 @@ class AppLauncher(Box):
 
     def on_search_entry_activate(self, text):
         if text == ':wp':
-            send_signal(f'notch_{self._monitor}.open_notch("wallpapers")')
+            monitor_id = get_hyprland_monitors().get_current_gdk_monitor_id()
+            send_signal(f'notch_{monitor_id}.open_notch("wallpapers")')

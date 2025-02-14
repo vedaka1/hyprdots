@@ -146,11 +146,11 @@
   background-color: var(--surface);
 }
 
-#container-1,
+/* #container-1,
 #container-2,
 #container-3 {
   border-radius: 20px;
-}
+} */
 
 #box-1 {
   min-width: 196px;
@@ -158,8 +158,8 @@
 }
 
 #box-2 {
-  min-width: 518px;
-  min-height: 248px;
+  /* min-width: 300px; */
+  /* min-height: 248px; */
 }
 
 #box-3 {

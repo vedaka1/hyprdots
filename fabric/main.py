@@ -4,9 +4,10 @@ from fabric.utils import get_relative_path, monitor_file
 
 from config import get_base_config
 from modules.bar import Bar
+from modules.controller import NotchController
 from modules.notch import Notch
 from utils.common import create_module
-from utils.monitors import get_monitors_ids
+from utils.monitors import get_hyprland_monitors
 
 
 # from modules.overview import Overview
@@ -20,9 +21,8 @@ if __name__ == '__main__':
 
     app = Application(config.PROC_NAME)
 
-    # corners = Corners()
-
-    for i in get_monitors_ids():
+    app.add_window(create_module('controller', NotchController, 0, globals()))
+    for i in get_hyprland_monitors().get_all_monitors().keys():
         app.add_window(create_module(f'bar_{i}', Bar, i, globals()))
         app.add_window(create_module(f'notch_{i}', Notch, i, globals()))
 

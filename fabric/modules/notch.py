@@ -13,8 +13,9 @@ from loguru import logger
 
 import modules.icons as icons
 from config import base_config
+from modules.bluetooth import BluetoothConnections
 from modules.corners import MyCorner
-from modules.dashboard import Dashboard
+from modules.dashboard.dashboard import Dashboard
 from modules.launcher import AppLauncher
 from modules.notification_popup import NotificationContainer
 from modules.power import PowerMenu
@@ -23,7 +24,7 @@ from utils.common import execute
 
 
 class Notch(Window):
-    def __init__(self, **kwargs):
+    def __init__(self, monitor: int = 0, **kwargs):
         super().__init__(
             name='notch',
             layer='top',
@@ -33,14 +34,16 @@ class Notch(Window):
             exclusivity='normal',
             visible=True,
             all_visible=True,
+            monitor=monitor,
             **kwargs,
         )
 
-        self.dashboard = Dashboard()
-        self.launcher = AppLauncher()
-        self.wallpapers = WallpaperSelector(base_config.WALLPAPERS_DIR)
-        self.notification = NotificationContainer()
-        self.power = PowerMenu()
+        self.dashboard = Dashboard(notch=self)
+        self.launcher = AppLauncher(monitor=monitor)
+        self.wallpapers = WallpaperSelector(base_config.WALLPAPERS_DIR, monitor=monitor)
+        self.notification = NotificationContainer(monitor=monitor)
+        self.power = PowerMenu(monitor=monitor)
+        self.bluetooth = BluetoothConnections(notch=self, monitor=monitor)
 
         self.active_window = ActiveWindow(
             name='hyprland-window',
@@ -50,32 +53,6 @@ class Notch(Window):
                 truncate=truncate,
             ),
         )
-
-        # self.cava = Box(
-        #     name="cava",
-        #     spacing=1,
-        #     children=[Box() for _ in range(28)]  # Usa "_" si no utilizas el índice
-        # ).build(
-        #     lambda box, _: Fabricator(
-        #         poll_from=f"cava -p {get_relative_path('cava.ini')}",  # Ruta al archivo de configuración
-        #         interval=0,  # Intervalo de actualización
-        #         stream=True,  # Habilita el stream para datos en tiempo real
-        #         on_changed=lambda f, line: [
-        #             child.set_style(
-        #                 f"* {{ margin-top: {26 - value}px; }}",  # Ajusta el margen superior dinámicamente
-        #                 compile=False,
-        #                 add_brackets=False,
-        #             )
-        #             for value, child in zip(
-        #                 [
-        #                     int(val)  # Convierte cada valor a entero
-        #                     for val in line.strip(";").split(";")  # Elimina ";" al inicio y final, luego separa
-        #                 ],
-        #                 box.children,  # Empareja cada valor con un hijo
-        #             )
-        #         ],
-        #     )
-        # )
 
         self.compact = Button(
             name='notch-compact',

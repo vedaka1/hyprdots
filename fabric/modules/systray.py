@@ -1,3 +1,5 @@
+from functools import lru_cache
+
 from fabric.system_tray.widgets import SystemTray
 
 
@@ -17,3 +19,10 @@ class Tray(SystemTray):
         if not self._items:
             self.hidden = True
             self.add_style_class('hidden')
+
+
+@lru_cache(1)
+def create_systray() -> Tray:
+    tray = Tray(icon_size=20, name='systray')
+    tray.add_style_class('hidden')
+    return tray

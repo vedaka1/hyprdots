@@ -56,6 +56,10 @@ bluetooth_off: str = '&#xeceb;'
 night_off: str = '&#xf162;'
 dnd_off: str = '&#xece9;'
 
+# Bluetooth
+bluetooth_connected: str = '&#xecea;'
+bluetooth_disconnected: str = '&#xf081;'
+
 # Player
 pause: str = '&#xed45;'
 play: str = '&#xed46;'
@@ -74,9 +78,18 @@ vol_mute: str = '&#xeb50;'
 vol_medium: str = '&#xeb4f;'
 vol_high: str = '&#xeb51;'
 
+# Overview
+circle_plus: str = '&#xea69;'
+
+# Pins
+copy_plus: str = '&#xfdae;'
+
 # Confirm
 accept: str = '&#xea5e;'
 cancel: str = '&#xeb55;'
+
+# Config
+config: str = '&#xeb20;'
 
 exceptions: list[str] = ['font_family', 'font_weight', 'span']
 

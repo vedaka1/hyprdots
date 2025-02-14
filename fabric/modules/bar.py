@@ -9,7 +9,7 @@ from gi.repository import Gdk
 
 from modules import icons
 from modules.battery import Battery
-from modules.systray import Tray
+from modules.systray import create_systray
 from utils.common import execute, send_signal
 
 
@@ -36,8 +36,8 @@ class Bar(Window):
             buttons=[WorkspaceButton(id=i, label='') for i in range(1, 11)],
         )
 
-        self.systray = Tray(icon_size=20, name='systray')
-        self.systray.add_style_class('hidden')
+        # self.systray = Tray(icon_size=20, name='systray')
+        self.systray = create_systray()
         self.battery = Battery(name='battery', h_align='center', v_align='center')
         self.date_time = DateTime(name='date-time', formatters=['%H:%M'], h_align='center', v_align='center')
 

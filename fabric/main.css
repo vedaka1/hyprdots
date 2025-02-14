@@ -9,6 +9,8 @@
 @import url("./styles/wallpapers.css");
 @import url("./styles/power.css");
 @import url("./styles/battery.css");
+@import url("./styles/audio.css");
+@import url("./styles/player.css");
 
 * {
   all: unset;
@@ -19,7 +21,7 @@
 }
 
 #bar-inner {
-  margin: 7px;
+  margin: 6px;
   opacity: 1;
   transition: all 0.5s cubic-bezier(0.5, 0.25, 0, 1);
 }

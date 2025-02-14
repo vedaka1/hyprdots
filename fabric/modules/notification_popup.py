@@ -3,7 +3,6 @@ import os
 from fabric.notifications.service import (
     Notification,
     NotificationAction,
-    Notifications,
 )
 from fabric.widgets.box import Box
 from fabric.widgets.button import Button
@@ -16,6 +15,8 @@ from loguru import logger
 import modules.icons as icons
 from components.image import CustomImage
 from utils.common import send_signal
+from utils.monitors import get_hyprland_monitors
+from utils.notification_server import get_notification_server
 
 
 class ActionButton(Button):
@@ -219,17 +220,18 @@ class NotificationContainer(Box):
     def __init__(self, monitor: int = 0):
         super().__init__(name='notification', orientation='v', spacing=4, v_expand=True, h_expand=True)
         self._monitor = monitor
-        self._server = Notifications()
+        self._server = get_notification_server()
         self._server.connect('notification-added', self.on_new_notification)
 
     def on_new_notification(self, fabric_notif, id):
+        monitor_id = get_hyprland_monitors().get_current_gdk_monitor_id()
         for child in self.get_children():
             child.destroy()
         notification = fabric_notif.get_notification_from_id(id)
         new_box = NotificationBox(notification)
         self.add(new_box)
         notification.connect('closed', self.on_notification_closed)
-        send_signal(f'notch_{self._monitor}.open_notch("notification")')
+        send_signal(f'notch_{monitor_id}.open_notch("notification")')
 
     def on_notification_closed(self, notification, reason):
         send_signal(f'notch_{self._monitor}.close_notch()')

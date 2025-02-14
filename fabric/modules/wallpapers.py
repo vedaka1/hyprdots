@@ -10,6 +10,7 @@ from gi.repository import GdkPixbuf, GLib, Gtk
 
 import modules.icons as icons
 from utils.common import execute, send_signal
+from utils.monitors import get_hyprland_monitors
 
 
 class WallpaperSelector(Box):
@@ -101,6 +102,7 @@ class WallpaperSelector(Box):
         self.show_all()
 
     def close_selector(self):
+        monitor_id = get_hyprland_monitors().get_current_gdk_monitor_id()
         send_signal(f'notch_{self._monitor}.close_notch()')
 
     def arrange_viewport(self, query: str = ''):
