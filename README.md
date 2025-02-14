@@ -1,4 +1,4 @@
-![example](./wallpapers/example.png)
+![example](./assets/example.png)
 
 ## Requirements
 ### Arch (pacman)
