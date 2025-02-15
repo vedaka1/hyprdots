@@ -1,10 +1,11 @@
+from fabric.bluetooth import BluetoothClient, BluetoothDevice
 from fabric.widgets.box import Box
-from fabric.widgets.label import Label
-from fabric.widgets.image import Image
 from fabric.widgets.button import Button
 from fabric.widgets.centerbox import CenterBox
+from fabric.widgets.image import Image
+from fabric.widgets.label import Label
 from fabric.widgets.scrolledwindow import ScrolledWindow
-from fabric.bluetooth import BluetoothClient, BluetoothDevice
+
 import modules.icons as icons
 
 
@@ -48,16 +49,14 @@ class BluetoothDeviceSlot(CenterBox):
 
 
 class BluetoothConnections(Box):
-    def __init__(self, **kwargs):
+    def __init__(self, notch, **kwargs):
         super().__init__(
             name='bluetooth',
             spacing=8,
             orientation='vertical',
             **kwargs,
         )
-
-        self.notch = kwargs['notch']
-
+        self.notch = notch
         self.buttons = self.notch.dashboard.widgets.buttons.bluetooth_button
         self.bt_status_text = self.buttons.bluetooth_status_text
         self.bt_status_button = self.buttons.bluetooth_status_button
@@ -141,3 +140,7 @@ class BluetoothConnections(Box):
         if device.paired:
             return self.paired_box.add(slot)
         return self.available_box.add(slot)
+
+
+def create_bluetooth_connections(notch) -> BluetoothConnections:
+    return BluetoothConnections(notch=notch)

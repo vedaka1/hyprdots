@@ -4,7 +4,6 @@ from fabric.widgets.box import Box
 from fabric.widgets.button import Button
 from fabric.widgets.label import Label
 from fabric.widgets.revealer import Revealer
-from loguru import logger
 
 from modules import icons
 from services.mrpis import MprisPlayer, create_mpris_player_manager
@@ -15,7 +14,7 @@ class Mpris(Box):
 
     def __init__(self, **kwargs):
         # Initialize the EventBox with specific name and style
-        super().__init__(**kwargs)
+        super().__init__(name='mrpis', **kwargs)
         self.player = None
 
         self.label = Label(label='Nothing playing', style_classes='panel-text')
@@ -23,14 +22,6 @@ class Mpris(Box):
 
         # Services
         self.mpris_manager = create_mpris_player_manager()
-
-        for player in self.mpris_manager.players:
-            logger.info(
-                f'[PLAYER MANAGER] player found: {player.get_property("player-name")}',
-            )
-            self.player = MprisPlayer(player)
-            self.player.connect('notify::metadata', self.get_current)
-            self.player.connect('notify::playback-status', self.get_playback_status)
 
         self.revealer = Revealer(
             name='mpris-revealer',
@@ -57,9 +48,16 @@ class Mpris(Box):
             tooltip_text='Prev',
         )
         self.control_buttons = Box(spacing=10, children=(self.button_prev, self.button_play_pause, self.button_next))
-        self.box = Box(spacing=10, children=[self.control_buttons])
+        self.box = Box(spacing=10)
 
         self.children = self.box
+        self.mpris_manager.connect('player-appeared', self.create_player)
+
+    def create_player(self, *_) -> None:
+        for player in self.mpris_manager.players:
+            self.player = MprisPlayer(player)
+            self.player.connect('notify::metadata', self.get_current)
+            self.player.connect('notify::playback-status', self.get_playback_status)
 
     def get_current(self, *_):
         bar_label = cast(str, self.player.title)
@@ -73,7 +71,6 @@ class Mpris(Box):
 
     def get_playback_status(self, *_):
         # Get the current playback status and change the icon accordingly
-
         status = self.player.playback_status.lower()
         if status == 'playing':
             self.box.children = (self.cover, self.control_buttons, self.revealer)
@@ -84,7 +81,7 @@ class Mpris(Box):
             self.revealer.set_reveal_child(True)
             self.icon.set_markup(icons.play)
         else:
-            self.box.children = (self.control_buttons,)
+            self.box.children = ()
             self.revealer.set_reveal_child(False)
 
     def play_pause(self, *_) -> None:
@@ -107,4 +104,4 @@ class Mpris(Box):
 
 
 def create_mpris_player() -> Mpris:
-    return Mpris(name='mrpis')
+    return Mpris()

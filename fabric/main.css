@@ -11,6 +11,7 @@
 @import url("./styles/battery.css");
 @import url("./styles/audio.css");
 @import url("./styles/player.css");
+@import url("./styles/bluetooth.css");
 
 * {
   all: unset;

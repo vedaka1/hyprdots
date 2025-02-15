@@ -39,11 +39,11 @@ class Notch(Window):
         )
 
         self.dashboard = Dashboard(notch=self)
+        self.bluetooth = BluetoothConnections(notch=self)
         self.launcher = AppLauncher(monitor=monitor)
         self.wallpapers = WallpaperSelector(base_config.WALLPAPERS_DIR, monitor=monitor)
         self.notification = NotificationContainer(monitor=monitor)
         self.power = PowerMenu(monitor=monitor)
-        self.bluetooth = BluetoothConnections(notch=self, monitor=monitor)
 
         self.active_window = ActiveWindow(
             name='hyprland-window',
@@ -184,6 +184,7 @@ class Notch(Window):
                 self.wallpapers.viewport.set_property('name', None)
         for style in ['launcher', 'dashboard', 'wallpapers', 'notification', 'power']:
             self.stack.remove_style_class(style)
+
         self.stack.set_visible_child(self.compact)
 
     def open_notch(self, widget: str):
@@ -199,6 +200,7 @@ class Notch(Window):
             'wallpapers': self.wallpapers,
             'notification': self.notification,
             'power': self.power,
+            'bluetooth': self.bluetooth,
         }
 
         # Limpiar clases y estados previos
